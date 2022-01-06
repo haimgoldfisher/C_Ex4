@@ -7,32 +7,31 @@ int main()
 {
     int i; // index
     char currChar;
-    pnode* head = (pnode *) malloc(sizeof(pnode));
     currChar = getchar();
     while (currChar != EOF || currChar != '\n')
     {
         if (currChar == 'A') // curr graph removing & new graph building
         {
-            deleteGraph_cmd(head);
-            build_graph_cmd(head);
+            delete_graph();
+            init_graph();
         }
         else if (currChar == 'B') // new node adding
         {
-            insert_node_cmd(head);
+            add_node();
         }
         else if (currChar == 'D') // node removing (+ relevant edges)
         {
-            delete_node_cmd(head);
+            remove_node();
         }
         else if (currChar == 'S') // Shortest Path
         {
-            shortsPath_cmd();
+            shortest_path();
         }
         else if (currChar == 'T') // TSP - Traveling Salesman Problem
         {
-            TSP_cmd();
+            TSP();
         }
     }
-    free(head);
+    //free(head);
     return 0;
 }
