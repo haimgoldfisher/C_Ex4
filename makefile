@@ -24,4 +24,4 @@ graph.o:		graph.c graph.h
 .PHONY: clean all
 
 clean:
-	rm -f *.o *.a *.so stringProg stringProgd
+	rm -f *.o *.a *.so graph graphd

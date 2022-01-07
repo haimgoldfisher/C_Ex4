@@ -5,32 +5,58 @@
 
 int main()
 {
-    int i; // index
-    char currChar;
-    currChar = getchar();
-    while (currChar != EOF || currChar != '\n')
+    char curr_char;
+    int index = 0;
+//    struct Graph graph;
+    struct Graph * graph = (struct Graph*) malloc(sizeof(struct Graph));
+    scanf("%c", &curr_char);
+    while (curr_char != EOF || curr_char != '\n')
     {
-        if (currChar == 'A') // curr graph removing & new graph building
+        if (curr_char == 'A') // curr graph removing & new graph building
         {
-            delete_graph();
-            init_graph();
+            // can be 'n' or int
+            index++;
+            if (index > 1)
+            {
+//                free(graph->head_node);
+//                free(graph->head_edge);
+//                graph->edges_num=0;
+//                graph->nodes_num=0;
+                delete_graph(*graph);
+            }
+            init_graph(graph);
         }
-        else if (currChar == 'B') // new node adding
+        else if (curr_char == 'B') // new node adding
         {
-            add_node();
+            index++;
+            int id_to_add;
+            while ()
+            {
+                scanf("%d",&id_to_add);
+                add_node(id_to_add, *graph);
+            }
         }
-        else if (currChar == 'D') // node removing (+ relevant edges)
+        else if (curr_char == 'D') // node removing (+ relevant edges)
         {
-            remove_node();
+            index++;
+            int id_to_remove;
+            while ()
+            {
+                scanf("%d",&id_to_remove);
+                remove_node(id_to_remove ,*graph);
+            }
         }
-        else if (currChar == 'S') // Shortest Path
+        else if (curr_char == 'S') // Shortest Path
         {
-            shortest_path();
+            index++;
+            shortest_path(graph);
         }
-        else if (currChar == 'T') // TSP - Traveling Salesman Problem
+        else if (curr_char == 'T') // TSP - Traveling Salesman Problem
         {
-            TSP();
+            index++;
+            TSP(graph);
         }
+        scanf("%c", &curr_char); // the menu after we made our first function choose
     }
     //free(head);
     return 0;

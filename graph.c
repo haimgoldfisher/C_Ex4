@@ -14,19 +14,19 @@ void swap(char *a, char *b)
     *b = temp;
 }
 
-Node* get_node(int id, Node* head)
+Node* get_node(int id, struct Node* head)
 {
     if (head == NULL) // stop condition
         return NULL;
-    Node* curr = head;
+    struct Node* curr = head;
     if (curr->key == id) // stop condition 2
         return curr;
     return get_node(id, head->next); // recursive call to next node
 }
 
-void add_node(int id, Graph graph)
+void add_node(int id, struct Graph graph)
 {
-    Node* new_node = (struct Node*) malloc(sizeof(struct Node));
+    struct Node* new_node = (struct Node*) malloc(sizeof(struct Node));
     // Node new_node;
     new_node->key = id;
     new_node->next = NULL;
@@ -40,7 +40,7 @@ void add_node(int id, Graph graph)
     {
         return;
     }
-    Node* curr_node = graph.head_node;
+    struct Node* curr_node = graph.head_node;
     while (curr_node->next != NULL)
     {
         curr_node = curr_node->next;
@@ -55,7 +55,7 @@ void add_node(int id, Graph graph)
 
 void remove_relevant_edges(int id_to_remove, Graph graph) // after remove a node from a graph
 {
-    Edge* curr = graph.head_edge;
+    struct Edge* curr = graph.head_edge;
     while (curr->next != NULL)
     {
         if (curr->src == id_to_remove || curr->dest == id_to_remove)
@@ -75,7 +75,7 @@ void remove_node(int id_to_remove, Graph graph)
 {
     if (graph.head_node == NULL)
         return;
-    Node* this_node = graph.head_node;
+    struct Node* this_node = graph.head_node;
     if (this_node->key == id_to_remove)
     {
         graph.head_node = NULL;
@@ -86,10 +86,10 @@ void remove_node(int id_to_remove, Graph graph)
     }
     while(this_node->next != NULL)
     {
-        Node *next_node = this_node->next;
+        struct Node *next_node = this_node->next;
         if (next_node->key == id_to_remove)
         {
-            Node *next_next_node = next_node->next;
+            struct Node *next_next_node = next_node->next;
             remove_relevant_edges(id_to_remove, graph);
             if (next_next_node != NULL)
                 this_node->next = next_next_node;
@@ -105,15 +105,15 @@ void remove_node(int id_to_remove, Graph graph)
 }
 
 
-void connect(int src, int dest, double w, Graph graph)
+void connect(int src, int dest, int w, Graph graph)
 {
-    Edge* new_edge = (struct Edge*) malloc(sizeof(struct Edge));
+    struct Edge* new_edge = (struct Edge*) malloc(sizeof(struct Edge));
     //Edge new_edge;
     new_edge->src = src;
     new_edge->dest = dest;
     new_edge->weight = w;
     new_edge->next = NULL;
-    Edge* curr = graph.head_edge;
+    struct Edge* curr = graph.head_edge;
     while (curr->next != NULL)
     {
         if (curr->src == src && curr->dest == dest)
@@ -126,10 +126,10 @@ void connect(int src, int dest, double w, Graph graph)
     curr->next = new_edge;
     graph.edges_num++;
 }
-void remove_edge(int src, int dest, Graph graph) {
+void remove_edge(int src, int dest, struct Graph graph) {
     if (graph.head_edge == NULL)
         return;
-    Edge *this_edge = graph.head_edge;
+    struct Edge *this_edge = graph.head_edge;
     if (this_edge->src == src && this_edge->dest == dest) {
         graph.head_edge = NULL;
         free(this_edge);
@@ -137,9 +137,9 @@ void remove_edge(int src, int dest, Graph graph) {
         return;
     }
     while (this_edge->next != NULL) {
-        Edge *next_edge = this_edge->next;
+        struct Edge *next_edge = this_edge->next;
         if (next_edge->src == src && next_edge->dest == dest) {
-            Edge *next_next_edge = next_edge->next;
+            struct Edge *next_next_edge = next_edge->next;
             if (next_next_edge != NULL)
                 this_edge->next = next_next_edge;
             else
@@ -153,12 +153,17 @@ void remove_edge(int src, int dest, Graph graph) {
     }
 }
 
-Graph init_graph()
+void init_graph(struct Graph *graph)
 {
-    return NULL;
+    int nodes_num;
+    scanf(" %d", &nodes_num);
+    if (nodes_num < 1)
+        return;
+    struct Node* head = (Node*) malloc((nodes_num * sizeof(Node)));
+    graph = NULL;
 }
 
-void print_nodes(Node* curr)
+void print_nodes(struct Node* curr)
 {
    while (curr != NULL)
    {
@@ -167,7 +172,7 @@ void print_nodes(Node* curr)
    }
 }
 
-void print_edges(Edge* curr)
+void print_edges(struct Edge* curr)
 {
    while (curr != NULL)
    {
@@ -176,26 +181,26 @@ void print_edges(Edge* curr)
    }
 }
 
-void print_graph(Graph graph) //for self debug
+void print_graph(struct Graph graph) //for self debug
 {
     print_nodes(graph.head_node);
     print_edges(graph.head_edge);
 }
-void delete_graph(Graph graph)
+void delete_graph(struct Graph graph)
 {
-    Node* node = graph.head_node;
-    Edge* edge = graph.head_edge;
+    struct Node* node = graph.head_node;
+    struct Edge* edge = graph.head_edge;
     while (node != NULL)
     {
         remove_node(node->key, graph);
         node = graph.head_node;
     }
 }
-void shortest_path(int src, int dest, Graph graph)
+void shortest_path(int src, int dest, struct Graph graph)
 {
 
 }
-void TSP(Graph graph)
+void TSP(struct Graph graph)
 {
 
 }

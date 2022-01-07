@@ -25,7 +25,7 @@ typedef struct Node {
 
 typedef struct Edge {
     int src;
-    double weight;
+    int weight;
     int dest;
     struct Edge* next; // for linked list
 } Edge;
@@ -39,15 +39,15 @@ typedef struct Graph {
 
 //
 
-void add_node(int id, Graph graph);
-void remove_node(int id, Graph graph);
-void connect(int src, int dest, double w, Graph graph);
-void remove_edge(int src, int dest, Graph graph);
-Graph init_graph();
-void printGraph(Graph graph);
-void delete_graph(Graph graph);
-void shortest_path(int src, int dest, Graph graph);
-void TSP(Graph graph);
+void add_node(int id, struct Graph graph);
+void remove_node(int id, struct Graph graph);
+void connect(int src, int dest, int w, struct Graph graph);
+void remove_edge(int src, int dest, struct Graph graph);
+void init_graph(struct Graph *graph);
+void printGraph(struct Graph graph);
+void delete_graph(struct Graph graph);
+void shortest_path(int src, int dest, struct Graph graph);
+void TSP(struct Graph graph);
 
 
 void build_graph_cmd(pnode *head);
