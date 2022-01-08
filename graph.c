@@ -24,6 +24,24 @@ Node* get_node(int id, struct Node* head)
     return get_node(id, head->next); // recursive call to next node
 }
 
+void remove_src_edges(int id_to_remove, Graph graph) // after remove a node from a graph
+{
+    struct Edge* curr = graph.head_edge;
+    while (curr->next != NULL)
+    {
+        if (curr->src == id_to_remove)
+        {
+            remove_edge(curr->src, curr->dest, graph);
+            graph.head_edge--;
+            curr = graph.head_edge;
+        }
+        else
+        {
+            curr = curr->next;
+        }
+    }
+}
+
 void add_node(int id, struct Graph graph)
 {
     struct Node* new_node = (struct Node*) malloc(sizeof(struct Node));
@@ -38,6 +56,7 @@ void add_node(int id, struct Graph graph)
     }
     if (graph.head_node->key == id) // first node has the same key as new node
     {
+        remove_src_edges(id, graph); // remove edges FROM this node (not TO)
         return;
     }
     struct Node* curr_node = graph.head_node;
@@ -153,14 +172,27 @@ void remove_edge(int src, int dest, struct Graph graph) {
     }
 }
 
-void init_graph(struct Graph *graph)
+void init_graph(struct Graph *graph, char curr_char)
 {
     int nodes_num;
     scanf(" %d", &nodes_num);
     if (nodes_num < 1)
         return;
     struct Node* head = (Node*) malloc((nodes_num * sizeof(Node)));
-    graph = NULL;
+    scanf(" %c", &curr_char);
+    while (curr_char == 'n')
+    {
+        int node_id;
+        scanf(" %d", &node_id);
+        add_node(node_id, *graph);
+        // for the edges from this node
+        int w, dest;
+        while (scanf(" %d %d", &dest, &w) == 2)
+        {
+            connect(node_id, dest, w, *graph);
+        }
+        scanf(" %c", &curr_char);
+    }
 }
 
 void print_nodes(struct Node* curr)

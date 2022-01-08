@@ -9,7 +9,7 @@ int main()
     int index = 0;
 //    struct Graph graph;
     struct Graph * graph = (struct Graph*) malloc(sizeof(struct Graph));
-    scanf("%c", &curr_char);
+    scanf(" %c", &curr_char);
     while (curr_char != EOF || curr_char != '\n')
     {
         if (curr_char == 'A') // curr graph removing & new graph building
@@ -24,39 +24,49 @@ int main()
 //                graph->nodes_num=0;
                 delete_graph(*graph);
             }
-            init_graph(graph);
+            init_graph(graph, curr_char);
         }
         else if (curr_char == 'B') // new node adding
         {
             index++;
             int id_to_add;
-            while ()
+            scanf(" %d",&id_to_add);
+            add_node(id_to_add, *graph);
+            int dest, w;
+            while (scanf(" %d %d", &dest, &w) == 2)
             {
-                scanf("%d",&id_to_add);
-                add_node(id_to_add, *graph);
+                connect(id_to_add, dest, w, *graph);
             }
+            scanf(" %c", &curr_char);
         }
         else if (curr_char == 'D') // node removing (+ relevant edges)
         {
             index++;
             int id_to_remove;
-            while ()
-            {
-                scanf("%d",&id_to_remove);
-                remove_node(id_to_remove ,*graph);
-            }
+            scanf(" %d",&id_to_remove);
+            remove_node(id_to_remove ,*graph);
+            scanf(" %c", &curr_char);
         }
         else if (curr_char == 'S') // Shortest Path
         {
             index++;
-            shortest_path(graph);
+            int src, dest;
+            if (scanf(" %d %d", &src, &dest) == 2)
+                shortest_path(src, dest, *graph);
+            scanf(" %c", &curr_char);
         }
         else if (curr_char == 'T') // TSP - Traveling Salesman Problem
         {
             index++;
+            struct Node head;
+            int id;
+            while (scanf(" %d", &id) == 1)
+            {
+
+            }
             TSP(graph);
+            scanf(" %c", &curr_char);
         }
-        scanf("%c", &curr_char); // the menu after we made our first function choose
     }
     //free(head);
     return 0;

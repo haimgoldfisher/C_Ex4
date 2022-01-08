@@ -43,7 +43,7 @@ void add_node(int id, struct Graph graph);
 void remove_node(int id, struct Graph graph);
 void connect(int src, int dest, int w, struct Graph graph);
 void remove_edge(int src, int dest, struct Graph graph);
-void init_graph(struct Graph *graph);
+void init_graph(struct Graph *graph, char curr_char);
 void printGraph(struct Graph graph);
 void delete_graph(struct Graph graph);
 void shortest_path(int src, int dest, struct Graph graph);
