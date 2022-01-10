@@ -296,7 +296,6 @@ int shortest_path(int src, int dest, struct Graph *graph)
             size = curr_node->key+1;
         curr_node = curr_node->next;
     }
-    free(curr_node);
     int **mat_neighbors = (int**) malloc(size * sizeof(int*));
     int i,j,k;
     for (i = 0; i < size; i++)
@@ -357,6 +356,7 @@ int shortest_path(int src, int dest, struct Graph *graph)
     {
         free(mat_neighbors[i]);
     }
+    free(mat_neighbors);
     return res;
 }
 
@@ -410,4 +410,22 @@ int TSP(struct Graph *graph, char *curr_char)
         min_sum = -1;
     free(cities);
     return min_sum;
+}
+
+void free_graph(struct Graph *graph)
+{
+    struct Node *ptr_node = graph->head_node;
+    struct Edge *ptr_edge = graph->head_edge;
+    while (ptr_node != NULL)
+    {
+        struct Node *free_node = ptr_node;
+        ptr_node = ptr_node->next;
+        free(free_node);
+    }
+    while (ptr_edge != NULL)
+    {
+        struct Edge *free_edge = ptr_edge;
+        ptr_edge = ptr_edge->next;
+        free(free_edge);
+    }
 }
