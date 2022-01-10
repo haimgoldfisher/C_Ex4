@@ -22,13 +22,13 @@ typedef struct Graph {
 
 void add_node(int, struct Graph*);
 void remove_node(int, struct Graph*);
-void connect(int, int, int, struct Graph*);
+void connect(int, int, int, struct Graph*); // add new edge
 void remove_edge(int, int, struct Graph*);
 void init_graph(struct Graph*, char*);
-void print_graph(struct Graph*);
+void print_graph(struct Graph*); // for self debug
 void delete_graph(struct Graph*);
 int shortest_path(int, int, struct Graph*);
 int TSP(struct Graph*, char*);
-void free_graph(struct Graph*);
+void free_graph(struct Graph*); // it frees the graph
 
 #endif

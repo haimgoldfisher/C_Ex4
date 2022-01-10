@@ -3,29 +3,29 @@
 
 int main()
 {
-    char curr_char;
-    struct Graph g = {0, 0, NULL, NULL};
-    struct Graph *graph_ptr = &g;
-    scanf(" %c", &curr_char);
-    while (curr_char != EOF || curr_char != '\n')
+    char curr_char; // for scanner
+    struct Graph g = {0, 0, NULL, NULL}; // the graph of the program
+    struct Graph *graph_ptr = &g; // pointer to the graph
+    scanf(" %c", &curr_char); // must be a char
+    while (curr_char != EOF || curr_char != '\n') // read until the input has chars
     {
         if (curr_char == 'A') // curr graph removing & new graph building
         {
-            if (graph_ptr->nodes_num > 0)
+            if (graph_ptr->nodes_num > 0) // we have a graph - delete it
             {
                 delete_graph(graph_ptr);
             }
             init_graph(graph_ptr, &curr_char);
         }
-        else if (curr_char == 'B') // new node adding
+        else if (curr_char == 'B') // new node adding / node update
         {
             int id_to_add;
             scanf(" %d",&id_to_add);
-            add_node(id_to_add, graph_ptr);
+            add_node(id_to_add, graph_ptr); // node adding
             int dest, w;
             while (scanf(" %d %d", &dest, &w) == 2)
             {
-                connect(id_to_add, dest, w, graph_ptr);
+                connect(id_to_add, dest, w, graph_ptr); // edges adding
             }
             scanf(" %c", &curr_char);
         }
@@ -44,7 +44,7 @@ int main()
                 res = shortest_path(src, dest, graph_ptr);
             if (res == 0)
                 res = -1;
-            printf("Dijsktra shortest path: %d \n", res);
+            printf("Dijsktra shortest path: %d \n", res); // actualy we work with floyd algo
             scanf(" %c", &curr_char);
         }
         else if (curr_char == 'T') // TSP - Traveling Salesman Problem
@@ -54,17 +54,17 @@ int main()
             printf("TSP shortest path: %d \n", ans);
             scanf(" %c", &curr_char);
         }
-        else if (curr_char == 'E')
+        else if (curr_char == 'E') // my EXIT
         {
             break; // for self debug
         }
-        else if (curr_char == 'P')
+        else if (curr_char == 'P') // my PRINTER
         {
             print_graph(graph_ptr);
             scanf(" %c", &curr_char);
         }
     }
-    free_graph(graph_ptr);
+    free_graph(graph_ptr); // nodes + edges
     return 0;
 }
 
