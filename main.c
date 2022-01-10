@@ -54,14 +54,14 @@ int main()
             printf("TSP shortest path: %d \n", ans);
             scanf(" %c", &curr_char);
         }
-        else if (curr_char == 'E') // my EXIT
-        {
-            break; // for self debug
-        }
         else if (curr_char == 'P') // Printer for debug
         {
             print_graph(graph_ptr);
             scanf(" %c", &curr_char);
+        }
+        else //EXIT
+        {
+            break;
         }
     }
     free_graph(graph_ptr);
