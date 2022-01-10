@@ -24,7 +24,7 @@ void swap(int *a, int *b) // for TSP
     }
 }
 
-Node* get_node(int id, struct Node *head) // actualy we dont need it
+Node* get_node(int id, struct Node *head)
 {
     if (head == NULL) // stop condition
         return NULL;
@@ -40,7 +40,7 @@ void remove_src_edges(int id_to_remove, Graph *graph) // after remove a node fro
     struct Edge* curr = graph->head_edge;
     while (curr != NULL)
     {
-        if (curr->src == id_to_remove) // we care only about the id of the src
+        if (curr->src == id_to_remove)
         {
             remove_edge(curr->src, curr->dest, graph);
             curr = graph->head_edge;
@@ -68,6 +68,9 @@ void add_node(int id, struct Graph *graph)
         remove_src_edges(id, graph); // remove edges FROM this node (not TO)
         return;
     }
+    struct Node* new_node = (struct Node*) malloc(sizeof(struct Node));
+    new_node->key = id;
+    new_node->next = NULL;
     struct Node* curr_node = graph->head_node;
     while (curr_node->next != NULL)
     {
@@ -75,16 +78,12 @@ void add_node(int id, struct Graph *graph)
         if (curr_node->key == id)  // curr node has the same key as new node
         {
             remove_src_edges(id, graph); // remove edges FROM this node (not TO)
-            free(curr_node);
             return;
         }
     }
-    struct Node* new_node = (struct Node*) malloc(sizeof(struct Node));
-    new_node->key = id;
-    new_node->next = NULL;
     curr_node->next = new_node;
     graph->nodes_num++;
-    free(curr_node);
+    //free(curr_node);
 }
 
 void remove_relevant_edges(int id_to_remove, Graph *graph) // after remove a node from a graph
@@ -92,7 +91,7 @@ void remove_relevant_edges(int id_to_remove, Graph *graph) // after remove a nod
     struct Edge* curr = graph->head_edge;
     while (curr != NULL)
     {
-        if (curr->src == id_to_remove || curr->dest == id_to_remove) // we care about the id of src&dest
+        if (curr->src == id_to_remove || curr->dest == id_to_remove)
         {
             remove_edge(curr->src, curr->dest, graph);
             curr = graph->head_edge;
@@ -106,10 +105,10 @@ void remove_relevant_edges(int id_to_remove, Graph *graph) // after remove a nod
 
 void remove_node(int id_to_remove, Graph *graph)
 {
-    if (graph->head_node == NULL) // no nodes to remove case
+    if (graph->head_node == NULL)
         return;
     struct Node* this_node = graph->head_node;
-    if (this_node->key == id_to_remove && graph->nodes_num == 1) // one node's graph case
+    if (this_node->key == id_to_remove && graph->nodes_num == 1)
     {
         graph->head_node = NULL;
         remove_relevant_edges(id_to_remove, graph);
@@ -117,7 +116,7 @@ void remove_node(int id_to_remove, Graph *graph)
         graph->nodes_num = 0;
         return;
     }
-    if (this_node->key == id_to_remove) // first node the remove when its the head of the graph
+    if (this_node->key == id_to_remove)
     {
         graph->head_node = this_node->next;
         remove_relevant_edges(id_to_remove, graph);
@@ -125,18 +124,18 @@ void remove_node(int id_to_remove, Graph *graph)
         graph->nodes_num--;
         return;
     }
-    while(this_node->next != NULL) // regular cases
+    while(this_node->next != NULL)
     {
         struct Node *next_node = this_node->next;
         if (next_node->key == id_to_remove)
         {
             struct Node *next_next_node = next_node->next;
             remove_relevant_edges(id_to_remove, graph);
-            if (next_next_node != NULL) // not the last node - skip it
+            if (next_next_node != NULL)
             {
                 this_node->next = next_next_node;
             }
-            else // the last node - free it and make the new last's next NULL
+            else
             {
                 this_node->next = NULL;
                 free(next_next_node);
@@ -152,20 +151,21 @@ void remove_node(int id_to_remove, Graph *graph)
 // this function add an edge to the wanted graph
 void connect(int src, int dest, int w, Graph *graph)
 {
-    if (graph->edges_num > 0) // trivial case
+    if (graph->edges_num > 0)
     {
         struct Edge *curr_edge = graph->head_edge;
         while (curr_edge != NULL)
         {
-            if (curr_edge->src == src && curr_edge->dest == dest) // we check if this edge already exist
+            if (curr_edge->src == src && curr_edge->dest == dest)
             {
-                return; // do nothing
+                return;
             }
             curr_edge = curr_edge->next;
         }
         free(curr_edge);
     }
     struct Edge* new_edge = (struct Edge*) malloc(sizeof(struct Edge));
+    //Edge new_edge;
     new_edge->src = src;
     new_edge->dest = dest;
     new_edge->weight = w;
@@ -190,7 +190,7 @@ void connect(int src, int dest, int w, Graph *graph)
     graph->edges_num++;
 }
 void remove_edge(int src, int dest, struct Graph *graph) {
-    if (graph->head_edge == NULL) // trivial case
+    if (graph->head_edge == NULL)
         return;
     struct Edge *this_edge = graph->head_edge;
     if (this_edge->src == src && this_edge->dest == dest && graph->edges_num == 1) {
@@ -284,14 +284,19 @@ void delete_graph(struct Graph *graph)
 int shortest_path(int src, int dest, struct Graph *graph)
 {
     int size = graph->nodes_num;
+//    int *nodes_keys = (int*)malloc(size*sizeof(int));
     struct Node *curr_node = graph->head_node;
+//    for (int i = 0; i < size; i++) {
+//        nodes_keys[i] = curr_node->key;
+//        curr_node = curr_node->next;
+//    }
     while (curr_node != NULL)
     {
         if (curr_node->key+1 > size)
             size = curr_node->key+1;
         curr_node = curr_node->next;
     }
-    int **mat_neighbors = (int**) malloc(size * sizeof(int*)); // arr of pointers
+    int **mat_neighbors = (int**) malloc(size * sizeof(int*));
     int i,j,k;
     for (i = 0; i < size; i++)
     {
@@ -308,7 +313,7 @@ int shortest_path(int src, int dest, struct Graph *graph)
         mat_neighbors[ptr_edge->src][ptr_edge->dest] = ptr_edge->weight;
         ptr_edge = ptr_edge->next;
     }
-    for(k=0;k<size;k++) // floyd warshall algo:
+    for(k=0;k<size;k++)
     {
         for(i=0;i<size;i++)
         {
