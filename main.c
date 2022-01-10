@@ -64,6 +64,7 @@ int main()
             scanf(" %c", &curr_char);
         }
     }
+    free_graph(graph_ptr);
     return 0;
 }
 

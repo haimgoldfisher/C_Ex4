@@ -274,7 +274,7 @@ void print_graph(struct Graph *graph) //for self debug
 void delete_graph(struct Graph *graph)
 {
     struct Node* node = graph->head_node;
-   // struct Edge* edge = graph.head_edge;
+    // struct Edge* edge = graph.head_edge;
     while (node != NULL)
     {
         remove_node(node->key, graph);

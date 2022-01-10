@@ -29,5 +29,6 @@ void print_graph(struct Graph*);
 void delete_graph(struct Graph*);
 int shortest_path(int, int, struct Graph*);
 int TSP(struct Graph*, char*);
+void free_graph(struct Graph*);
 
 #endif
