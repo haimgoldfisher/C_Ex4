@@ -1,20 +1,20 @@
-#ifndef GRAPH_
-#define GRAPH_
+#ifndef GRAPH_H
+#define GRAPH_H
 
-typedef struct GRAPH_NODE_ *pnode;
-
-typedef struct edge_ {
-    int weight;
-    pnode endpoint;
-    struct edge_ *next;
-} edge, *pedge;
-
-
-typedef struct GRAPH_NODE_ {
-    int node_num;
-    pedge edges;
-    pnode *next;
-} node, *pnode;
+//typedef struct GRAPH_NODE_ *pnode;
+//
+//typedef struct edge_ {
+//    int weight;
+//    pnode endpoint;
+//    struct edge_ *next;
+//} edge, *pedge;
+//
+//
+//typedef struct GRAPH_NODE_ {
+//    int node_num;
+//    pedge edges;
+//    pnode *next;
+//} node, *pnode;
 
 //
 
@@ -39,23 +39,23 @@ typedef struct Graph {
 
 //
 
-void add_node(int id, struct Graph graph);
-void remove_node(int id, struct Graph graph);
-void connect(int src, int dest, int w, struct Graph graph);
-void remove_edge(int src, int dest, struct Graph graph);
-void init_graph(struct Graph *graph, char curr_char);
-void printGraph(struct Graph graph);
-void delete_graph(struct Graph graph);
-void shortest_path(int src, int dest, struct Graph graph);
-void TSP(struct Graph graph);
+void add_node(int, struct Graph*);
+void remove_node(int, struct Graph*);
+void connect(int, int, int, struct Graph*);
+void remove_edge(int, int, struct Graph*);
+void init_graph(struct Graph*, char*);
+void print_graph(struct Graph*);
+void delete_graph(struct Graph*);
+void shortest_path(int, int, struct Graph*);
+void TSP(struct Graph*);
 
 
-void build_graph_cmd(pnode *head);
-void insert_node_cmd(pnode *head);
-void delete_node_cmd(pnode *head);
-void printGraph_cmd(pnode head); //for self debug
-void deleteGraph_cmd(pnode* head);
-void shortsPath_cmd(pnode head);
-void TSP_cmd(pnode head);
+//void build_graph_cmd(pnode *head);
+//void insert_node_cmd(pnode *head);
+//void delete_node_cmd(pnode *head);
+//void printGraph_cmd(pnode head); //for self debug
+//void deleteGraph_cmd(pnode* head);
+//void shortsPath_cmd(pnode head);
+//void TSP_cmd(pnode head);
 
 #endif
