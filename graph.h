@@ -1,79 +1,34 @@
-# include <stdio.h>
-# include "graph.h"
+#ifndef GRAPH_H
+#define GRAPH_H
 
-int main()
-{
-    char curr_char;
-    struct Graph g = {0, 0, NULL, NULL};
-    struct Graph *graph_ptr = &g;
-    scanf(" %c", &curr_char);
-    while (curr_char != EOF || curr_char != '\n')
-    {
-        if (curr_char == 'A') // curr graph removing & new graph building
-        {
-            if (graph_ptr->nodes_num > 0)
-            {
-                delete_graph(graph_ptr);
-            }
-            init_graph(graph_ptr, &curr_char);
-        }
-        else if (curr_char == 'B') // new node adding
-        {
-            int id_to_add;
-            scanf(" %d",&id_to_add);
-            add_node(id_to_add, graph_ptr);
-            int dest, w;
-            while (scanf(" %d %d", &dest, &w) == 2)
-            {
-                connect(id_to_add, dest, w, graph_ptr);
-            }
-            scanf(" %c", &curr_char);
-        }
-        else if (curr_char == 'D') // node removing (+ relevant edges)
-        {
-            int id_to_remove;
-            scanf(" %d",&id_to_remove);
-            remove_node(id_to_remove ,graph_ptr);
-            scanf(" %c", &curr_char);
-        }
-        else if (curr_char == 'S') // Shortest Path
-        {
-            int src, dest, res;
-            res = -1;
-            if (scanf(" %d %d", &src, &dest) == 2)
-                res = shortest_path(src, dest, graph_ptr);
-            if (res == 0)
-                res = -1;
-            printf("Dijsktra shortest path: %d \n", res);
-            scanf(" %c", &curr_char);
-        }
-        else if (curr_char == 'T') // TSP - Traveling Salesman Problem
-        {
-            int ans = -1;
-            ans = TSP(graph_ptr, &curr_char);
-            printf("TSP shortest path: %d \n", ans);
-            scanf(" %c", &curr_char);
-        }
-        else if (curr_char == 'E')
-        {
-            break; // for self debug
-        }
-        else if (curr_char == 'P')
-        {
-            print_graph(graph_ptr);
-            scanf(" %c", &curr_char);
-        }
-    }
-    free_graph(graph_ptr);
-    return 0;
-}
+typedef struct Node {
+    int key;
+    struct Node* next; // for linked list
+} Node;
 
-// MAIN()
-//struct Graph g = {0, 0, NULL, NULL};
-//struct Graph *ptr_g;
-//ptr_g = &g;
-//add_node(0, ptr_g);
-//add_node(1, ptr_g);
-//connect(0, 1, 1, ptr_g);
-//connect(1, 0, 1, ptr_g);
-//remove_node(0, ptr_g);
+typedef struct Edge {
+    int src;
+    int weight;
+    int dest;
+    struct Edge* next; // for linked list
+} Edge;
+
+typedef struct Graph {
+    int nodes_num;
+    int edges_num;
+    struct Node* head_node; // linked list of nodes
+    struct Edge* head_edge; // linked list of edges
+} Graph;
+
+void add_node(int, struct Graph*);
+void remove_node(int, struct Graph*);
+void connect(int, int, int, struct Graph*);
+void remove_edge(int, int, struct Graph*);
+void init_graph(struct Graph*, char*);
+void print_graph(struct Graph*);
+void delete_graph(struct Graph*);
+int shortest_path(int, int, struct Graph*);
+int TSP(struct Graph*, char*);
+void free_graph(struct Graph*);
+
+#endif

@@ -68,9 +68,7 @@ void add_node(int id, struct Graph *graph)
         remove_src_edges(id, graph); // remove edges FROM this node (not TO)
         return;
     }
-    struct Node* new_node = (struct Node*) malloc(sizeof(struct Node));
-    new_node->key = id;
-    new_node->next = NULL;
+
     struct Node* curr_node = graph->head_node;
     while (curr_node->next != NULL)
     {
@@ -78,12 +76,20 @@ void add_node(int id, struct Graph *graph)
         if (curr_node->key == id)  // curr node has the same key as new node
         {
             remove_src_edges(id, graph); // remove edges FROM this node (not TO)
+            while(curr_node != NULL)
+                curr_node = curr_node->next;
+            free(curr_node);
             return;
         }
     }
+    struct Node* new_node = (struct Node*) malloc(sizeof(struct Node));
+    new_node->key = id;
+    new_node->next = NULL;
     curr_node->next = new_node;
     graph->nodes_num++;
-    //free(curr_node);
+    while(curr_node != NULL) // for free the pointer
+        curr_node = curr_node->next;
+    free(curr_node);
 }
 
 void remove_relevant_edges(int id_to_remove, Graph *graph) // after remove a node from a graph
