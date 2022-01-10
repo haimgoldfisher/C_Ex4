@@ -46,8 +46,8 @@ void remove_edge(int, int, struct Graph*);
 void init_graph(struct Graph*, char*);
 void print_graph(struct Graph*);
 void delete_graph(struct Graph*);
-void shortest_path(int, int, struct Graph*);
-void TSP(struct Graph*);
+int shortest_path(int, int, struct Graph*);
+int TSP(struct Graph*, char*);
 
 
 //void build_graph_cmd(pnode *head);

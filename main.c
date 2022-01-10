@@ -1,12 +1,9 @@
 # include <stdio.h>
-# include <stdlib.h>
 # include "graph.h"
 
 int main()
 {
     char curr_char;
-    int index = 0;
-    //struct Graph *graph = (struct Graph*) malloc(sizeof(struct Graph));
     struct Graph g = {0, 0, NULL, NULL};
     struct Graph *graph_ptr = &g;
     scanf(" %c", &curr_char);
@@ -14,21 +11,14 @@ int main()
     {
         if (curr_char == 'A') // curr graph removing & new graph building
         {
-            // can be 'n' or int
-            index++;
             if (graph_ptr->nodes_num > 0)
             {
-//                free(graph->head_node);
-//                free(graph->head_edge);
-//                graph->edges_num=0;
-//                graph->nodes_num=0;
                 delete_graph(graph_ptr);
             }
             init_graph(graph_ptr, &curr_char);
         }
         else if (curr_char == 'B') // new node adding
         {
-            index++;
             int id_to_add;
             scanf(" %d",&id_to_add);
             add_node(id_to_add, graph_ptr);
@@ -41,7 +31,6 @@ int main()
         }
         else if (curr_char == 'D') // node removing (+ relevant edges)
         {
-            index++;
             int id_to_remove;
             scanf(" %d",&id_to_remove);
             remove_node(id_to_remove ,graph_ptr);
@@ -49,31 +38,25 @@ int main()
         }
         else if (curr_char == 'S') // Shortest Path
         {
-            index++;
-//            int src, dest;
-//            if (scanf(" %d %d", &src, &dest) == 2)
-//                shortest_path(src, dest, *graph);
-//            scanf(" %c", &curr_char);
-//            printf("Dijsktra shortest path: %d \n", path);
-
+            int src, dest, res;
+            res = -1;
+            if (scanf(" %d %d", &src, &dest) == 2)
+                res = shortest_path(src, dest, graph_ptr);
+            if (res == 0)
+                res = -1;
+            printf("Dijsktra shortest path: %d \n", res);
+            scanf(" %c", &curr_char);
         }
         else if (curr_char == 'T') // TSP - Traveling Salesman Problem
         {
-            index++;
-//            struct Node head;
-//            int id;
-//            while (scanf(" %d", &id) == 1)
-//            {
-//
-//            }
-//            TSP(graph);
-//            scanf(" %c", &curr_char);
-//            printf("TSP shortest path: %d \n", path);
-
+            int ans = -1;
+            ans = TSP(graph_ptr, &curr_char);
+            printf("TSP shortest path: %d \n", ans);
+            scanf(" %c", &curr_char);
         }
         else if (curr_char == 'E')
         {
-            break;
+            break; // for self debug
         }
         else if (curr_char == 'P')
         {
@@ -81,10 +64,10 @@ int main()
             scanf(" %c", &curr_char);
         }
     }
-    //free(head);
     return 0;
 }
 
+// MAIN()
 //struct Graph g = {0, 0, NULL, NULL};
 //struct Graph *ptr_g;
 //ptr_g = &g;
