@@ -18,7 +18,7 @@ libgraph.so:	$(OBJECTS_GRAPH)
 	$(CC) $(FLAGS) -shared -o libgraph.so $(OBJECTS_GRAPH)
 main.o:	main.c graph.h
 	$(CC) $(FLAGS) -c main.c
-graph.o:		graph.c graph.h
+graph.o: graph.c graph.h
 	$(CC) $(FLAGS) -c graph.c $(LIBS)
 
 .PHONY: clean all
